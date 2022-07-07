@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma3-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -10,17 +10,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User {
-    id        Int         @id  @default(autoincrement())
-    email     String      @unique
-    name      String
-    age       Int
-    city      String?
-    password  String
-    avatar    String?
-    status    Boolean?     @default(false)
-    TokenPair TokenPair[]
+  id        Int         @id @default(autoincrement())
+  email     String      @unique
+  name      String
+  age       Int
+  city      String?
+  password  String
+  avatar    String?
+  status    Boolean?    @default(false)
+  TokenPair TokenPair[]
 }
 
 model TokenPair {
@@ -30,3 +29,8 @@ model TokenPair {
   author       User?  @relation(fields: [authorId], references: [id])
   authorId     Int?   @unique
 }
+
+// prisma format  // check
+// npx prisma generate // синхронізація схеми з базою
+// npx prisma migrate dev --name change_post_table --create-only  // add new column to db
+// npx prisma migrate dev --name initnpx prisma migrate dev --name init
