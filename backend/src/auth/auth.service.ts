@@ -58,6 +58,7 @@ export class AuthService {
       return this.tokenService.generateTokensPair(userFromDB);
     } catch (err) {
       console.log(err);
+      return err.message[0];
     }
   }
 

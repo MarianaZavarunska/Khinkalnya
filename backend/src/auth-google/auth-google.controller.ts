@@ -1,20 +1,15 @@
-import { Controller, Get, Req, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
+import { Body, Controller, Get, HttpException, HttpStatus, Post, Req, UseGuards } from '@nestjs/common';
 
 import { AuthGoogleService } from './auth-google.service';
+import { LoginGoogleTokenDto } from './dto';
 
-@Controller('google')
+
+@Controller('api/v1/auth/google')
 export class AuthGoogleController {
   constructor(private readonly authGoogleService: AuthGoogleService) {}
 
-  @Get()
-  @UseGuards(AuthGuard('google'))
-  // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
-  async googleAuth(@Req() req) {}
-
-  @Get('redirect')
-  @UseGuards(AuthGuard('google'))
-  googleAuthRedirect(@Req() req) {
-    return this.authGoogleService.googleLogin(req);
+  @Post('/login')
+  async userGoogleLogin(@Body() body: LoginGoogleTokenDto) {
+    return await this.authGoogleService.userGoogleLogin(body.info);
   }
 }

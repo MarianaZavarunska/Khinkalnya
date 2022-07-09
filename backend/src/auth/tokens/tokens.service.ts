@@ -11,12 +11,14 @@ export class TokenService {
     private prismaService: PrismaService,
   ) {}
 
-  async generateTokensPair(user: User) {
+  async generateTokensPair(user: Partial<User>) {
     const payload = { id: user.id, email: user.email };
     const [access, refresh] = await Promise.all([
       this.jwtService.sign(payload, { secret: 'Access', expiresIn: '1d' }),
-      this.jwtService.sign(payload, { secret: 'Refresh', expiresIn: '1h' }),
+      this.jwtService.sign(payload, { secret: 'Refresh', expiresIn: '1d' }),
     ]);
+
+    await this.deleteTokensPair(user.id);
 
     const tokensPair = await this.saveTokens({ access, refresh }, user.id);
     return {

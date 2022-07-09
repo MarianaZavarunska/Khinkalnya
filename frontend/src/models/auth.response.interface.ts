@@ -1,13 +1,9 @@
 import { IUser } from './user.interface';
+import { ITokensPair } from './tokens.interface';
 
 export interface IAuthResponseApi {
   user: IUser,
-  tokensPair: {
-    id: number,
-    accessToken: string,
-    refreshToken: string,
-    authorId: number,
-  }
+  tokensPair: ITokensPair,
 }
 
 export interface IAuthResponse {

@@ -5,7 +5,7 @@ const { Footer } = Layout;
 const FooterComponent: FC = () => {
   return(
     <Footer>
-
+    Footer
     </Footer>
   )
 }
