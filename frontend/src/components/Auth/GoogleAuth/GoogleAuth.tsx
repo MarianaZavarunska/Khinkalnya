@@ -6,7 +6,7 @@ import { GoogleLogoutButton } from '../GoogleLogout/GoogleLogout';
 
 
 const GoogleAuth:FC = () => {
-  const clientId = "270077238897-4kqpjvteon9l6fd4edrhr9qom640cog0.apps.googleusercontent.com";
+  const clientId = process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID;
   useEffect( () => {
     function start() {
       gapi.auth2.getAuthInstance({

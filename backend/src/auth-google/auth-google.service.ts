@@ -41,4 +41,8 @@ export class AuthGoogleService {
     }
   }
 
+  async userGoogleLogout(data:any) {
+
+  }
+
 }

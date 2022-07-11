@@ -1,14 +1,13 @@
 import React, { FC } from 'react';
 import GoogleLogin from 'react-google-login';
-import * as dotenv from "dotenv";
 
-import googleLogin from '../../../utils/google-login';
+import {googleLogin} from '../../../utils/google-login';
 
 
 
 const GoogleLoginButton:FC = () => {
 
-  const clientId = process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID as string;
+  const clientId = process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID;
 
   const handleSuccess = async (res:any) => {
     const tokens = await googleLogin(res);

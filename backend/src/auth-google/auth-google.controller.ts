@@ -12,4 +12,9 @@ export class AuthGoogleController {
   async userGoogleLogin(@Body() body: LoginGoogleTokenDto) {
     return await this.authGoogleService.userGoogleLogin(body.info);
   }
+
+  @Post('/logout')
+  async userGoogleLogout(@Body() body: any) {
+    return await this.authGoogleService.userGoogleLogout(body);
+  }
 }
