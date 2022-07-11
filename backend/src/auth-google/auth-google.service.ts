@@ -41,7 +41,19 @@ export class AuthGoogleService {
     }
   }
 
-  async userGoogleLogout(data:any) {
+  async userGoogleLogout(userEmail: string) {
+     try {
+       const user = await this.userService.getUserByEmail(userEmail);
+
+       if(user){
+         await this.tokenService.deleteTokensPair(user.id);
+         console.log("logout back service");
+       }
+     } catch (err) {
+
+       console.log(err);
+       return err.message[0];
+     }
 
   }
 

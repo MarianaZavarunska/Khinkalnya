@@ -14,7 +14,7 @@ export class AuthGoogleController {
   }
 
   @Post('/logout')
-  async userGoogleLogout(@Body() body: any) {
-    return await this.authGoogleService.userGoogleLogout(body);
+  async userGoogleLogout(@Body() userEmail:string) {
+     await this.authGoogleService.userGoogleLogout(userEmail);
   }
 }

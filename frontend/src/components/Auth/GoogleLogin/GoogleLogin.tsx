@@ -1,16 +1,15 @@
 import React, { FC } from 'react';
 import GoogleLogin from 'react-google-login';
-
-import {googleLogin} from '../../../utils/google-login';
-
-
+import { useAppDispatch } from '../../../hooks/redux';
+import { googleLogin } from '../../../store/slices/user.slice';
 
 const GoogleLoginButton:FC = () => {
 
   const clientId = process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID;
+  const dispatch = useAppDispatch();
 
   const handleSuccess = async (res:any) => {
-    const tokens = await googleLogin(res);
+    const tokens = await dispatch(googleLogin(res));
 
     if(!tokens) {
       alert("Error while logging via Google 1")

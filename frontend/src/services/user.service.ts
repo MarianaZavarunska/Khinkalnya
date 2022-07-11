@@ -7,6 +7,7 @@ import { urls } from '../constants';
 export const userService = {
   registration: (data: IUser) => axiosService.post<IAuthResponseApi>(urls.registration,data),
   login:(data: Partial<IUser>) => axiosService.post<IAuthResponseApi>(urls.login,data),
+  logout:(data: Partial<IUser>) => axiosService.post<void>(urls.logout,data),
   googleLogin:(data:string) => axiosService.post<ITokensPair>(urls.googleLogin,{info: data}),
-  googleLogout: (data:any) => axiosService.post<any>(urls.googleLogout,data)
+  googleLogout: (data:string) => axiosService.post<ITokensPair>(urls.googleLogout,data)
 }

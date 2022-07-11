@@ -2,10 +2,10 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 
-import { CreateUserDto } from './dto/create-user.dto';
+import { CreateUserDto, LoginUserDto } from './dto';
 import { UserService } from '../user/user.service';
 import { TokenService } from './tokens/tokens.service';
-import { LoginUserDto } from './dto/login-user.dto';
+
 
 @Injectable()
 export class AuthService {
@@ -57,6 +57,23 @@ export class AuthService {
       await this.tokenService.deleteTokensPair(userFromDB.id);
       return this.tokenService.generateTokensPair(userFromDB);
     } catch (err) {
+      console.log(err);
+      return err.message[0];
+    }
+  }
+
+  async userLogout(userEmail: string) {
+    try {
+      const userFromDB = await this.userService.getUserByEmail(userEmail);
+      if (userFromDB) {
+        return new HttpException(
+          'Email are taken',
+          HttpStatus.UNPROCESSABLE_ENTITY,
+        );
+      }
+      await this.tokenService.deleteTokensPair(userFromDB.id);
+
+    } catch(err) {
       console.log(err);
       return err.message[0];
     }

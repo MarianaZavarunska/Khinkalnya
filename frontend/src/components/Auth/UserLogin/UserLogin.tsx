@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { IUser } from '../../../models/user.interface';
+import { IUser } from '../../../models';
 import { useAppDispatch } from '../../../hooks/redux';
 import { userLogin } from '../../../store/slices/user.slice';
 
