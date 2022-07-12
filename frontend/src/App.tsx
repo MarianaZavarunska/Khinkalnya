@@ -14,7 +14,6 @@ function App() {
           <Route path={'/auth/registration'} element={<UserRegistration/>}></Route>
           <Route path={'/auth/login'} element={<UserLogin/>}></Route>
           <Route path={'/auth/google'} element={<Home/>}></Route>
-
         </Route>
      </Routes>
     </div>

@@ -2,8 +2,6 @@ import React, { FC, useEffect } from 'react';
 import {gapi} from 'gapi-script';
 
 import { GoogleLoginButton } from '../GoogleLogin/GoogleLogin';
-import { GoogleLogoutButton } from '../GoogleLogout/GoogleLogout';
-
 
 const GoogleAuth:FC = () => {
   const clientId = process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID;
@@ -23,7 +21,6 @@ const GoogleAuth:FC = () => {
   return (
     <div>
        <GoogleLoginButton/>
-      <GoogleLogoutButton/>
     </div>
   );
 };

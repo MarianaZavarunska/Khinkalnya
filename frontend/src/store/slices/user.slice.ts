@@ -11,6 +11,7 @@ interface IInitialState {
   accessToken?: string;
   refreshToken?: string;
   status?: number;
+  isModalActive: boolean;
 }
 
 const initialState: IInitialState = {
@@ -18,6 +19,7 @@ const initialState: IInitialState = {
   accessToken: '',
   refreshToken: '',
   status: 200,
+  isModalActive: false,
 }
 
 export const userRegistration = createAsyncThunk<IAuthResponse, IUser>('userSlice/userRegistration',
@@ -74,28 +76,14 @@ export const googleLogin = createAsyncThunk<ITokensPair | undefined, GoogleLogin
   }
 })
 
-export const googleLogout = createAsyncThunk<ITokensPair | undefined, GoogleLoginResponse | GoogleLoginResponseOffline >
-('googleLogout/userSlice',
-  async (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
-  if ('profileObj' in response) {
-    try{
-      const user = response.profileObj;
-
-      const { data } = await userService.googleLogout(user.email);
-
-      return data;
-    } catch (e) {
-      return undefined;
-    }
-  } else {
-    return undefined;
-  }
-})
-
 const userSlice = createSlice({
   name:'userSlice',
   initialState,
-  reducers:{},
+  reducers:{
+    setModalActive:(state) => {
+      state.isModalActive = !state.isModalActive;
+    }
+  },
   extraReducers: (builder) => {
 
     builder.addCase(userRegistration.fulfilled, (state, action) => {
@@ -127,18 +115,10 @@ const userSlice = createSlice({
       localStorage.setItem('accessToken', action.payload?.accessToken || '');
       localStorage.setItem('refreshToken', action.payload?.refreshToken || '');
     })
-
-    builder.addCase(googleLogout.fulfilled, (state, action) => {
-
-      state.accessToken = action.payload?.accessToken;
-      state.refreshToken = action.payload?.refreshToken;
-
-      localStorage.clear();
-      console.log("logout slice");
-    })
   }
 
 })
 
 const userReducer = userSlice.reducer;
-export default userReducer;
+export const {setModalActive} = userSlice.actions;
+export {userReducer};

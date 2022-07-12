@@ -26,7 +26,7 @@ const GoogleLoginButton:FC = () => {
   return (
     <GoogleLogin
       clientId={clientId}
-      buttonText="Log in Google"
+      buttonText=""
       onSuccess={handleSuccess}
       onFailure={handleFailure}
       cookiePolicy={"single_host_origin"}
