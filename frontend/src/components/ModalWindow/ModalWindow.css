@@ -23,7 +23,8 @@
     padding: 20px;
     border-radius: 2px;
     background-color: var(--secondary-color);
-    width: 40vw;
+    box-shadow: 0 7px 10px var(--text-color);
+    width: 30vw;
     transform: scale(0.5);
     transition: all 0.4s;
 }
