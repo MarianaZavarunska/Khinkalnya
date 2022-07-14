@@ -1,14 +1,16 @@
 import { FC } from 'react';
 
 import './Header.css'
-import { setModalActive } from '../../store/slices';
+import { setLoginActive, setModalActive, userLogout } from '../../store/slices';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { ModalWindow } from '../ModalWindow/ModalWindow';
-import { UserLogin } from '../Auth';
+import { UserLogin, UserRegistration } from '../Auth';
 
 const HeaderComponent:FC = () => {
   const dispatch = useAppDispatch();
-  const {isModalActive} = useAppSelector((state) => state.userReducer)
+  const {user, isLoginActive, isRegisterActive, accessToken} = useAppSelector((state) => state.userReducer)
+
+  const request = {...user, accessToken};
 
   return (
     <div>
@@ -58,14 +60,19 @@ const HeaderComponent:FC = () => {
           <img src="/image-for-header/cart.png" width={'80px'} height={'50px'} alt="cart"/>
         </div>
           <div>
+            {user && <div>{user.name}</div>}
            <button  onClick={() => {
-              dispatch(setModalActive());
-            }}>Увійти</button>
+              dispatch(setLoginActive());
+
+              if(accessToken && request) dispatch(userLogout(request))
+            }}>
+             {!accessToken ? "Log In" : "Log out"}
+           </button>
           </div>
 
         </div>
       <ModalWindow>
-        {isModalActive && <UserLogin/>}
+        {isLoginActive ? <UserLogin/> : isRegisterActive ? <UserRegistration/> : null}
       </ModalWindow>
     </div>
 

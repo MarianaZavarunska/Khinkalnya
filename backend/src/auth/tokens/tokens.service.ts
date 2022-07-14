@@ -18,7 +18,9 @@ export class TokenService {
       this.jwtService.sign(payload, { secret: 'Refresh', expiresIn: '1d' }),
     ]);
 
-    await this.deleteTokensPair(user.id);
+    const tokensFromDB = await this.getTokensPairByUserId(user.id);
+
+    tokensFromDB && tokensFromDB.accessToken && await this.deleteTokensPair(user.id);
 
     const tokensPair = await this.saveTokens({ access, refresh }, user.id);
     return {
@@ -35,6 +37,10 @@ export class TokenService {
         authorId: id,
       },
     });
+  }
+
+  async getTokensPairByUserId(userId: number): Promise<TokenPair> {
+    return this.prismaService.tokenPair.findFirst({where: { authorId: userId }})
   }
 
   async deleteTokensPair(id: number) {

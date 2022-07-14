@@ -11,17 +11,17 @@ type Props = {
 
 const ModalWindow: FC<Props>= ( {children}) => {
   const dispatch = useAppDispatch();
-  const { isModalActive } = useAppSelector((state) => state.userReducer);
+  const { isRegisterActive, isLoginActive} = useAppSelector((state) => state.userReducer);
 
   return (
     <div
-      className={isModalActive ? "modal active" : "modal"}
+      className={ isLoginActive || isRegisterActive ? "modal active" : "modal"}
       onClick={() => {
         dispatch(setModalActive());
       }}
     >
       <div
-        className={isModalActive ? "modal-content active" : "modal-content"}
+        className={isLoginActive || isRegisterActive ? "modal-content active" : "modal-content"}
         onClick={(event) => event.stopPropagation()}
       >
         {children}

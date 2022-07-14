@@ -5,3 +5,6 @@ export interface IUser {
   city: string,
   password: string,
 }
+export interface ILogoutRequest extends Partial<IUser> {
+  accessToken?: string;
+}

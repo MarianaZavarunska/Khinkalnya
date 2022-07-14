@@ -14,8 +14,8 @@ export class UserService {
     });
   }
 
-  getUserByEmail(email: string): Promise<User> {
-    return this.prismaService.user.findFirst({ where: { email } });
+  getUserByEmail(userEmail: string): Promise<User> {
+    return this.prismaService.user.findFirst({ where: { email: userEmail } });
   }
 
   createUser(data: CreateUserDto): Promise<User> {

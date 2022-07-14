@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import GoogleLogin from 'react-google-login';
 import { useAppDispatch } from '../../../hooks/redux';
-import { googleLogin } from '../../../store/slices/user.slice';
+import { googleLogin, setLoginActive } from '../../../store/slices';
 
 const GoogleLoginButton:FC = () => {
 
@@ -14,6 +14,7 @@ const GoogleLoginButton:FC = () => {
     if(!tokens) {
       alert("Error while logging via Google 1")
     } else {
+      dispatch(setLoginActive());
       console.log("navigate");
     }
   }

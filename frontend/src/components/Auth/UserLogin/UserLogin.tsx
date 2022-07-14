@@ -3,38 +3,45 @@ import { useForm } from 'react-hook-form';
 
 import { IUser } from '../../../models';
 import { useAppDispatch } from '../../../hooks/redux';
-import { userLogin } from '../../../store/slices/user.slice';
+import { setLoginActive, setRegisterActive, userLogin } from '../../../store/slices';
 import { Link } from 'react-router-dom';
 import { GoogleAuth } from '../GoogleAuth/GoogleAuth';
+import './UserLogin.css';
 
 const UserLogin:FC = () => {
-  const {register, handleSubmit} = useForm<Partial<IUser>>()
+  const {register, handleSubmit, reset} = useForm<Partial<IUser>>()
   const dispatch = useAppDispatch();
 
 const onSubmitForm = async(data: Partial<IUser>) => {
+    dispatch(setLoginActive());
     await dispatch(userLogin(data));
+    reset();
   }
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmitForm)}>
-        <div className={'login-container'}>
-          <div><input type="text" placeholder={'email'}{...register('email')}/></div>
-          <div><input type="text" placeholder={'password'}{...register('password')}/></div>
-          <div>
-            <button>Log In</button>
-            <Link to={'/auth/registration'}>
-              <button>
-                Registration new account
-              </button>
-            </Link>
+      <form onSubmit={handleSubmit(onSubmitForm)} className="logIn-form">
+          <div className={'logIn-content'}>
+            <label>Email</label>
+            <input type="text"{...register('email')}/>
           </div>
-        </div>
-        <a href="#"><h4>Forgot Password?</h4></a>
 
-        <Link to={'/auth/google'}>
-          <GoogleAuth/>
-        </Link>
+          <div className={'logIn-content'}>
+            <label>Password</label>
+            <input type="text" {...register('password')}/>
+          </div>
+
+          <div className="btn-container">
+            <button>Log In</button>
+            <Link to={'/auth/google'}>
+              <GoogleAuth/>
+            </Link>
+            <a><h4>Forgot Password?</h4></a>
+
+            <button onClick={() => {dispatch(setRegisterActive())}}>
+                Sign Up
+            </button>
+          </div>
       </form>
     </div>
   )
